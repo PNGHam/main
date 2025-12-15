@@ -147,7 +147,7 @@ local combat = venyx:addPage("Combat", 5012544693)
 local combatSection = combat:addSection("Combat")
 
 combatSection:addToggle("Hitbox Expander", nil, function(v)
-    HitboxFlag = v                                                                                                                                                                                                                                                             ChildRemoved()                                ChildAdded()                                   ClearAllChildren()
+    HitboxFlag = v                  
 end)
 
 combatSection:addTextbox("Hitbox Size", "6", function(v)
@@ -239,6 +239,7 @@ corner.Parent = button
 button.MouseButton1Click:Connect(function()
     venyx:toggle()
 end)
+
 
 
 
