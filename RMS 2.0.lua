@@ -23,7 +23,7 @@ local AutoCollectFlag = false
 local SpeedBoostFlag = false
 local SpeedBoost1Flag = false
 local BoostValue = 14
-local Boost2Value = 14
+local Boost2Value = 1
 
 task.spawn(function()
     while task.wait(0.5) do
@@ -239,4 +239,5 @@ corner.Parent = button
 button.MouseButton1Click:Connect(function()
     venyx:toggle()
 end)
+
 
