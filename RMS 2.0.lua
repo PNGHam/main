@@ -1,13 +1,10 @@
--- UI Library
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))()
 local venyx = library.new("Venyx", 5013109572)
 
--- Services
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local LP = Players.LocalPlayer
 
--- Character handling
 local Character, Humanoid
 local function UpdateCharacter()
     Character = LP.Character or LP.CharacterAdded:Wait()
@@ -16,24 +13,18 @@ end
 UpdateCharacter()
 LP.CharacterAdded:Connect(UpdateCharacter)
 
--- Flags
 local HitboxFlag = false
 local HitboxSizeFlag = 6
 local HitboxTransparencyFlag = 0.7
--- NPC Hitbox flags
 local TargetNPCFlag = false
 local NPCHitboxSizeFlag = 5
 local NPCHitboxTransparencyFlag = 0.7
-
-
 local AutoCollectFlag = false
-
 local SpeedBoostFlag = false
+local SpeedBoost1Flag = false
 local BoostValue = 14
+local Boost2Value = 14
 
--------------------------------------------------
--- HITBOX EXPANDER (WITH RESET)
--------------------------------------------------
 task.spawn(function()
     while task.wait(0.5) do
         for i, player in pairs(workspace.Players:GetChildren()) do
@@ -60,9 +51,6 @@ task.spawn(function()
     end
 end)
 
--------------------------------------------------
--- NPC HITBOX EXPANDER (workspace.Map.Civilians)
--------------------------------------------------
 task.spawn(function()
 while task.wait(0.1) do
     -- Civilians
@@ -117,9 +105,7 @@ while task.wait(0.1) do
 
 end
 end)
--------------------------------------------------
--- AUTO COLLECT
--------------------------------------------------
+
 task.spawn(function()
     while task.wait() do
         if not AutoCollectFlag then continue end
@@ -136,9 +122,6 @@ task.spawn(function()
     end
 end)
 
--------------------------------------------------
--- SPEED BOOST (IMPLEMENTED + OPTIMIZED)
--------------------------------------------------
 task.spawn(function()
     while task.wait(0.1) do
         if Humanoid then
@@ -151,9 +134,6 @@ task.spawn(function()
     end
 end)
 
--------------------------------------------------
--- THEMES
--------------------------------------------------
 local themes = {
     Background = Color3.fromRGB(24,24,24),
     Glow = Color3.fromRGB(255,255,255),
@@ -163,9 +143,6 @@ local themes = {
     TextColor = Color3.fromRGB(255,255,255)
 }
 
--------------------------------------------------
--- UI PAGES
--------------------------------------------------
 local combat = venyx:addPage("Combat", 5012544693)
 local combatSection = combat:addSection("Combat")
 
@@ -194,13 +171,11 @@ end)
 NPCSection:addTextbox("NPC Hitbox Transparency", nil, function(value)
     NPCHitboxTransparencyFlag = tonumber(value)
 end)
--------------------------------------------------
--- MOVEMENT
--------------------------------------------------
+
 local movement = venyx:addPage("Movement", 5012544693)
 local movementSection = movement:addSection("Movement")
 
-movementSection:addToggle("Speed Boost", nil, function(v)
+movementSection:addToggle("SpeedBoost1 (Walkspeed)", nil, function(v)
     SpeedBoostFlag = v
 end)
 
@@ -208,9 +183,14 @@ movementSection:addSlider("Boost Value", 14, 14, 34, function(v)
     BoostValue = v
 end)
 
--------------------------------------------------
--- OTHER
--------------------------------------------------
+movementSection:addToggle("SpeedBoost2 (CFrame)", nil, function(v)
+    SpeedBoost2Flag = v
+end)
+
+movementSection:addSlider("Boost Value", 1, 1, 5, function(v)
+    Boost2Value = v
+end)
+
 local other = venyx:addPage("Other", 5012544693)
 local otherSection = other:addSection("Useful")
 
@@ -218,9 +198,6 @@ otherSection:addToggle("Auto Collect Cash/Gold", nil, function(v)
     AutoCollectFlag = v
 end)
 
--------------------------------------------------
--- THEME UI
--------------------------------------------------
 local themePage = venyx:addPage("Theme", 5012544693)
 local colorSection = themePage:addSection("Colors")
 local guiSection = themePage:addSection("Gui")
@@ -235,14 +212,8 @@ guiSection:addKeybind("Toggle UI", Enum.KeyCode.Three, function()
     venyx:toggle()
 end)
 
--------------------------------------------------
--- LOAD
--------------------------------------------------
 venyx:SelectPage(venyx.pages[1], true)
 
--------------------------------------------------
--- MOBILE UI TOGGLE BUTTON
--------------------------------------------------
 local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local screenGui = Instance.new("ScreenGui")
@@ -251,7 +222,7 @@ screenGui.ResetOnSpawn = false
 screenGui.Parent = playerGui
 
 local button = Instance.new("TextButton")
-button.Size = UDim2.new(0, 90, 0, 32) -- small, mobile-friendly
+button.Size = UDim2.new(0, 90, 0, 32)
 button.Position = UDim2.new(0, 10, 0.5, -16)
 button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 button.BorderSizePixel = 0
@@ -261,12 +232,11 @@ button.TextSize = 14
 button.Font = Enum.Font.Gotham
 button.Parent = screenGui
 
--- slight round corners
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 8)
 corner.Parent = button
 
--- click action
 button.MouseButton1Click:Connect(function()
     venyx:toggle()
 end)
+
