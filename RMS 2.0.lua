@@ -21,7 +21,7 @@ local NPCHitboxSizeFlag = 5
 local NPCHitboxTransparencyFlag = 0.7
 local AutoCollectFlag = false
 local SpeedBoostFlag = false
-local SpeedBoost1Flag = false
+local SpeedBoost2Flag = false
 local BoostValue = 14
 local Boost2Value = 1
 
@@ -239,5 +239,6 @@ corner.Parent = button
 button.MouseButton1Click:Connect(function()
     venyx:toggle()
 end)
+
 
 
